@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+
+<form method="post" novalidate>
+  {% csrf_token %}
+  {% include 'includes/bs4_form.html' with form=form %}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+</div>
+
+{% endblock %}

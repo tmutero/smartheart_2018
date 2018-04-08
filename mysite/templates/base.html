@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{% static 'assets/fonts/font-awesome.min.css' %}">
 
 </head>
-<body>
+<body >
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header"><a class="navbar-brand navbar-link" href="#">Smart Heart Diagnosis System</a>
@@ -28,11 +28,13 @@
                     <li role="presentation"><a href="#">Data-set </a></li>
                     <li role="presentation"><a href="#">Patients</a></li>
                     <li role="presentation"><a href="#">Users</a></li>
+                     <li role="presentation"><a href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
                     <li role="presentation"><a href="#">Login </a></li>
                     <li role="presentation"><a href="#">Create Account</a></li>
                     <li role="presentation"><a href="#">System Aims</a></li>
                 {% endif %}
+
 
 
             </ul>

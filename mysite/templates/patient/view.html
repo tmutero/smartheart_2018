@@ -1,10 +1,201 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base2.html' %}
 
-</body>
-</html>
+<title>{% block title %}Smart Heart Diagnosis{% endblock %}</title>
+
+{% block content %}
+
+    <div>
+        <h3>Patient -{{ patient.firstname }} {{ patient.lastname }}</h3>
+    </div>
+    <div class="panel with-nav-tabs panel-info">
+        <div class="panel-heading">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#dashbord" data-toggle="tab">Patient Dashbord</a></li>
+                <li><a href="#clinical" data-toggle="tab">Clinical Records</a></li>
+
+                <li><a href="#diagnosis" data-toggle="tab">Diagnosis Records</a></li>
+                <li><a href="#report" data-toggle="tab">Patient Report</a></li>
+
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="dashbord">Patient Details
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th>Firstname</th>
+                            <td>{{ patient.firstname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Surname</th>
+                            <td>{{ patient.lastname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Gender</th>
+                            <td>{{ patient.gender }}</td>
+                        </tr>
+                        <tr>
+                            <th>Age</th>
+                            <td>{{ patient.firstname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Mobile Number</th>
+                            <td>{{ patient.contact }}</td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td>{{ patient.address }}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><a class="btn btn-sm btn-warning" href="#"><span
+                                    class="glyphicon glyphicon-edit"></span> Print</a>
+                                <a class="btn btn-sm btn-success" href="delete/{{ patient.id }}"><span
+                                        class="glyphicon glyphicon-pencil"></span> Update</a></td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="tab-pane fade" id="clinical">
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Add
+                        New Clinical Details
+                    </button>
+                    <table class="table table-responsive">
+                        <thead class="alert-default">
+
+                        <tr>
+                            <th>Chest Pain</th>
+                            <th>Lastname</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Contact Details</th>
+                            <th>Address</th>
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+
+                        {% for patient_record in patient_record %}
+                            <tr>
+                                <td>{{ patient_record.chest_pain }}</td>
+                                <td>{{ patient_record.trestbps }}</td>
+                                <td>{{ patient_record.chol }}</td>
+                                <td>{{ patient_record.fbs }}</td>
+                                <td>{{ patient_record.restEcg }}</td>
+                                <td>{{ patient_record.thalach }}</td>
+                                <td>{{ patient_record.exang }}</td>
+                                <td>{{ patient_record.oldPeak }}</td>
+                                <td>{{ patient_record.slope }}</td>
+                                <td>{{ patient_record.ca }}</td>
+                                <td>{{ patient_record.thal }}</td>
+                                <td>{{ patient_record.date_created }}</td>
+
+                                <td>
+                                    <center><a class="btn btn-sm btn-warning edit" href="#">Edit</a>
+                                        <a class="btn btn-sm btn-primary delete"
+                                           href="{% url 'view_patient_record' patient.id %}">View</a>
+                                    </center>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Patient Clinical Details</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form class="form-horizontal" action="create_patient" method="POST">
+                                        {% csrf_token %}
+
+                                        <div class="box box-warning">
+
+                                            <!-- /.box-header -->
+                                            <div class="box-body">
+
+                                                <!-- text input -->
+                                                <div class="form-group">
+                                                    <label>Firstname </label>
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Enter first name"
+                                                           name="firstname">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Surname</label>
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Enter surname name"
+                                                           name="lastname">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Gender</label>
+                                                    <select class="form-control" name="gender">
+                                                        <option value="M">Male</option>
+                                                        <option value="F">Female</option>
+
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Contact</label>
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Enter contact number "
+                                                           name="contact">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    <textarea class="form-control" rows="3" placeholder="Enter address"
+                                                              name="address"></textarea>
+                                                </div>
+
+
+                                                <div class="box-footer">
+
+                                                    <button type="submit" class="btn btn-info pull-right">Submit
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                            <!-- /.box-body -->
+                                        </div>
+
+                                    </form>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="tab-pane fade" id="diagnosis">Diagnosis Records</div>
+                <div class="tab-pane fade" id="report">Patient Report</div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

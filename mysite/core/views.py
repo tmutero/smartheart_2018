@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-
+from datetime import datetime, date
 from mysite.core.forms import SignUpForm
 from .models import *
 
@@ -61,6 +61,13 @@ def update_patient(request, id):
     return redirect('/read_patient/')
 
 def view_patient_record(request, id):
+    print("-------------------------",id)
     patient=Patient.objects.get(id=id)
-    contex={'patient':patient}
+    patient_record=PatientRecords.objects.filter(patient_id=id)
+    print("============================================================")
+    print(patient_record)
+
+    contex={'patient':patient,
+            'patient_record':patient_record}
     return render(request,'patient/view.html',contex)
+

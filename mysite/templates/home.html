@@ -1,35 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 
 {% block content %}
     <div class="container">
         {% if user.username %}
-            {#        <h2>Welcome, {{ user.get_full_name }}#}
-            {#            <small>{{ user.username }}</small>#}
-            {##}
-            {#        </h2>#}
-            {#        <p>Your email address: {{ user.email }}</p>#}
-            {##}
-            {#        <p>Your birth date: {{ user.profile.birth_date }}</p>#}
-            <div class="row">
-                <div class="col-lg-6">
-                    <section class="card">
-                        <div class="card-body text-secondary">col-lg-6</div>
-                    </section>
-                </div>
-                <div class="col-lg-6 ">
-                    <section class="card">
-                        <div class="card-body text-secondary">col-lg-6</div>
-                    </section>
-                </div>
-            </div>
-        {% else %}
-            <ol class="breadcrumb">
-                <li><a href="#"><span>Home Page</span></a></li>
-                <li><a href="#"><span>Smart Heart Diagnosis </span></a></li>
-                <li class="active"><span>Description </span></li>
-            </ol>
 
-            <div class="row product">
+
+
+        {% else %}
+
+
+            <div class="row ">
                 {% load static %}
                 <div class="col-md-5 col-md-offset-0"><img src="{% static 'assets/img/1.png' %}">
                     <img src="{% static 'assets/img/2.png' %}"></div>

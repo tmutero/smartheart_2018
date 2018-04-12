@@ -1,0 +1,68 @@
+ <div class="container">
+        {% if user.username %}
+                 <h2>Welcome, {{ user.get_full_name }}
+                        <small>{{ user.username }}</small>
+
+                  </h2>
+            {#        <p>Your email address: {{ user.email }}</p>#}
+            {##}
+            {#        <p>Your birth date: {{ user.profile.birth_date }}</p>#}
+
+            <div class="row">
+                <div class="col-md-6">
+
+                        <div class="card-body text-secondary">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Button with Icons </strong>
+
+                                </div>
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-primary"><i class="fa fa-star"></i>&nbsp; Primary</button>
+                                    <button type="button" class="btn btn-secondary"><i class="fa fa-lightbulb-o"></i>&nbsp; Secondary</button>
+                                    <button type="button" class="btn btn-success"><i class="fa fa-magic"></i>&nbsp; Success</button>
+                                    <button type="button" class="btn btn-warning"><i class="fa fa-map-marker"></i>&nbsp; Warning</button>
+                                    <button type="button" class="btn btn-danger"><i class="fa fa-rss"></i>&nbsp; Danger</button>
+                                    <button type="button" class="btn btn-link"><i class="fa fa-link"></i>&nbsp; Link</button>
+                                </div>
+                            </div><!-- /# card -->
+                        </div>
+
+                </div>
+                <div class="col-md-6 ">
+                    <section class="card">
+                        <div class="card-body text-secondary">col-lg-6</div>
+                    </section>
+                </div>
+            </div>
+        {% else %}
+
+
+            <div class="row ">
+                {% load static %}
+                <div class="col-md-5 col-md-offset-0"><img src="{% static 'assets/img/1.png' %}">
+                    <img src="{% static 'assets/img/2.png' %}"></div>
+                <div class="col-md-7">
+                    <h2>System Overview</h2>
+                    <p class="text-info">The heart is a most significant muscular organ in humans,
+                        which pumps blood through the blood vessels of the circulatory system.
+                        Human life is dependent on the proper functioning of heart.
+                        Improper functioning of heart will influence other parts of human body like brain, kidney etc.
+                        If the blood circulation in body is inefficient, it affects both heart and brain.
+                        Generally blood arrest in heart is called as attack and blood arrest in brain is called as
+                        stroke.
+                        Human life is absolutely reliant on the efficient working of the heart and brain.
+                        A Heart disease is caused due to narrowing or blockage of coronary arteries.
+                        This is caused by the deposition of fat on the inner walls of the arteries and also due to build
+                        up cholesterol.
+                        Heart diseases can be caused due to number of factors such as high blood pressure,
+                        high cholesterol, unhealthy diet, lack of physical activity and obesity.</p>
+                    <h3>Click to Login</h3>
+
+                    <a href="{% url 'login' %}" class="btn btn-primary" role="button">
+                        LOGIN
+                    </a>
+                </div>
+            </div>
+            </div>
+        {% endif %}

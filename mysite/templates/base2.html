@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}Smart Heart Diagnosis{% endblock %}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'assets/bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'assets/bower_components/font-awesome/css/font-awesome.min.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{% static 'assets/bower_components/Ionicons/css/ionicons.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href=" {% static 'assets/dist/css/AdminLTE.min.css' %}">
+    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+          page. However, you can choose any other skin. Make sure you
+          apply the skin class to the body tag so the changes take effect. -->
+    <link rel="stylesheet" href="{% static 'assets/dist/css/skins/skin-blue.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/jquery.dataTables.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'js/bootstrap.min.js' %}"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+
+    <![endif]-->
+
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition skin-blue sidebar-mini">
+
+<div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+
+        <!-- Logo -->
+        <a href="index2.html" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>S</b>HD</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Smart</b>Heart</span>
+        </a>
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- Messages: style can be found in dropdown.less-->
+
+
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    {% if user.is_authenticated %}
+
+
+        <aside class="main-sidebar">
+
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info">
+                        <p>Admin</p>
+                        <!-- Status -->
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+
+                <!-- search form (Optional) -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+              </button>
+            </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">MENU</li>
+                    <li>
+                        <a href="{% url 'read_patient' %}">
+                            <i class="fa fa-fw fa-heartbeat"></i> <span>Patients</span>
+                            <span class="pull-right-container">
+              <small class="label pull-right bg-yellow">12</small>
+
+            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-fw fa-medkit"></i> <span>Training Data</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-fw  fa-bar-chart"></i> <span>Reports</span>
+
+
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-fw fa-user"></i> <span>Users</span>
+
+                        </a>
+                    </li>
+                     <li>
+                        <a href="#">
+                            <i class="fa fa-fw fa-cog"></i> <span>Settings</span>
+
+                        </a>
+                    </li>
+                     <li>
+                        <a href="{% url 'logout' %}">
+                            <i class="fa fa-fw  fa-arrow-left"></i> <span>Logout</span>
+
+                        </a>
+                    </li>
+
+                </ul>
+                <!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+    {% endif %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+
+
+            <small>Smart Heart System</small>
+
+
+        </section>
+
+        <!-- Main content -->
+        <section class="content container-fluid">
+
+            <!--------------------------
+              | Your Page Content Here |
+              -------------------------->
+            {% block content %}
+
+            {% endblock %}
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            Impacting society through technology
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2018 <a href="#">Tansoft Studio</a>.</strong> All rights reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 3 -->
+<script src="{% static 'assets/bower_components/jquery/dist/jquery.min.js' %}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="{% static 'assets/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'assets/dist/js/adminlte.min.js' %}"></script>
+
+<script src="{% static 'js/jquery-3.2.1.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#table').DataTable();
+    });
+</script>
+
+</body>
+</html>

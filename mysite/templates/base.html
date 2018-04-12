@@ -11,13 +11,13 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/user.css' %}"/>
-    <link rel="stylesheet" href="{% static 'assets/fonts/font-awesome.min.css' %}">
+    <link rel="stylesheet"  type="text/css" href="{% static 'assets/bootstrap/fonts/font-awesome.min.css' %}">
 
 </head>
 <body >
 <nav class="navbar navbar-default">
     <div class="container">
-        <div class="navbar-header"><a class="navbar-brand navbar-link" href="#">Smart Heart Diagnosis System</a>
+        <div class="navbar-header"><a class="navbar-brand navbar-link" href=href="{% url 'home' %}">Smart Heart Diagnosis System</a>
             <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span
                     class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
                     class="icon-bar"></span></button>
@@ -30,7 +30,7 @@
                     <li role="presentation"><a href="#">Users</a></li>
                      <li role="presentation"><a href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
-                    <li role="presentation"><a href="#">Login </a></li>
+                    <li role="presentation"><a href="{% url 'login' %}">Login </a></li>
                     <li role="presentation"><a href="#">Create Account</a></li>
                     <li role="presentation"><a href="#">System Aims</a></li>
                 {% endif %}
@@ -38,14 +38,16 @@
 
 
             </ul>
-            <a class="btn btn-primary navbar-btn navbar-right" role="button" href="#"><strong>SIGN UP</strong></a>
+            <a class="btn btn-primary navbar-btn navbar-right" role="button" href="{% url 'signup' %}"><strong>SIGN UP</strong></a>
         </div>
     </div>
 </nav>
 
 
 
+
 {% block content %}
+
 {% endblock %}
 <footer class="site-footer">
     <div class="container">

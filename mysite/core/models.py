@@ -30,6 +30,21 @@ class Patient(models.Model):
     contact=models.CharField(max_length=500,blank=True)
     date_created=models.DateField(auto_now=True)
 
+class PatientRecords(models.Model):
+    chest_pain=models.IntegerField(max_length=5,blank=True)
+    trestbps=models.IntegerField(max_length=5,blank=True)
+    chol=models.IntegerField(max_length=5,blank=True)
+    fbs=models.IntegerField(max_length=5,blank=True)
+    restEcg=models.IntegerField(max_length=5,blank=True)
+    thalach=models.IntegerField(max_length=5,blank=True)
+    exang=models.IntegerField(max_length=5,blank=True)
+    oldPeak = models.IntegerField(max_length=5,blank=True)
+    slope = models.IntegerField(max_length=5,blank=True)
+    ca = models.IntegerField(max_length=5,blank=True)
+    thal = models.IntegerField(max_length=5,blank=True)
+    date_created=models.DateField(auto_now=True)
+    patient = models.ForeignKey('Patient', on_delete=models.CASCADE)
+
 class Diasese(models.Model):
     name=models.CharField(max_length=400, blank=True)
     date_created=models.DateField(auto_now=True)

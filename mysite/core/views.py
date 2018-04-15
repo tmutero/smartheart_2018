@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from datetime import datetime, date
 from mysite.core.forms import SignUpForm
 from .models import *
-
+from xhtml2pdf import pisa
 
 @login_required
 def home(request):

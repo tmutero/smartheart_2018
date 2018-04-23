@@ -30,29 +30,37 @@ class Patient(models.Model):
     contact=models.CharField(max_length=500,blank=True)
     date_created=models.DateField(auto_now=True)
 
+    def age(self):
+        import datetime
+        return int((datetime.date.today() - self.birth_date).days / 365.25)
+
 class PatientRecords(models.Model):
-    chest_pain=models.IntegerField(max_length=5,blank=True)
-    trestbps=models.IntegerField(max_length=5,blank=True)
-    chol=models.IntegerField(max_length=5,blank=True)
-    fbs=models.IntegerField(max_length=5,blank=True)
-    restEcg=models.IntegerField(max_length=5,blank=True)
-    thalach=models.IntegerField(max_length=5,blank=True)
-    exang=models.IntegerField(max_length=5,blank=True)
-    oldPeak = models.IntegerField(max_length=5,blank=True)
-    slope = models.IntegerField(max_length=5,blank=True)
-    ca = models.IntegerField(max_length=5,blank=True)
-    thal = models.IntegerField(max_length=5,blank=True)
+    chest_pain=models.IntegerField(blank=True, null=True)
+    trestbps=models.IntegerField(blank=True, null=True)
+    chol=models.IntegerField(blank=True, null=True)
+    fbs=models.IntegerField(blank=True, null=True)
+    restEcg=models.IntegerField(blank=True, null=True)
+    thalach=models.IntegerField(blank=True, null=True)
+    exang=models.IntegerField(blank=True, null=True)
+    oldPeak = models.IntegerField(blank=True, null=True)
+    slope = models.IntegerField(blank=True, null=True)
+    ca = models.IntegerField(blank=True, null=True)
+    thal = models.IntegerField(blank=True, null=True)
     date_created=models.DateField(auto_now=True)
     patient = models.ForeignKey('Patient', on_delete=models.CASCADE)
 
-class Diasese(models.Model):
-    name=models.CharField(max_length=400, blank=True)
+class Prescribe(models.Model):
+    patient=models.ForeignKey('Patient', on_delete=models.CASCADE)
+    drug = models.ForeignKey('Drug', on_delete=models.CASCADE)
     date_created=models.DateField(auto_now=True)
-    drug=models.ForeignKey('Drug', on_delete=models.CASCADE)
+
+
 
 class Drug(models.Model):
     name=models.CharField(max_length=500, blank=True)
     date_created=models.DateField(auto_now=True)
+    type=models.CharField(max_length=200, blank=True)
+    formulation=models.CharField(max_length=200,blank=True)
 
 
 

@@ -102,7 +102,7 @@ desired effect
                         <img src="{% static 'assets/dist/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Doctor-Tafadzwa</p>
+                        <p>{{ user.get_full_name }}</p>
                         <!-- Status -->
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
@@ -132,9 +132,16 @@ desired effect
             </span>
                         </a>
                     </li>
+
+                     <li>
+                        <a href="{% url 'read_drug' %}">
+                            <i class="fa fa-fw fa-medkit"></i> <span>Drugs</span>
+
+                        </a>
+                    </li>
                     <li>
                         <a href="#">
-                            <i class="fa fa-fw fa-medkit"></i> <span>Training Data</span>
+                            <i class="fa fa-fw fa-cog"></i> <span>Training Data</span>
 
                         </a>
                     </li>
@@ -147,17 +154,12 @@ desired effect
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{% url 'read_user' %}">
                             <i class="fa fa-fw fa-user"></i> <span>Users</span>
 
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-fw fa-cog"></i> <span>Settings</span>
 
-                        </a>
-                    </li>
                     <li>
                         <a href="{% url 'logout' %}">
                             <i class="fa fa-fw  fa-arrow-left"></i> <span>Logout</span>

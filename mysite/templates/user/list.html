@@ -1,10 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base2.html' %}
 
-</body>
-</html>
+<title>{% block title %}Smart Heart:: Users{% endblock %}</title>
+
+{% block content %}
+
+
+    <ol class="breadcrumb">
+        <li><a href="#"><span>Users</span></a></li>
+        <li><a href="#"><span>Details</span></a></li>
+        <li class="active"><span>List </span></li>
+    </ol>
+
+
+
+
+            <table class="table table-responsive" id="table">
+                <thead class="alert-info">
+
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email Address</th>
+                    <th>Date Joined</th>
+                    <th>Username</th>
+                    <th>Role</th>
+
+                        <th>Action</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.date_joined }}</td>
+                        <td>{{ user.username }}</td>
+
+                        {% if user.is_superuser %}
+                            <td>
+                                Admin
+                            </td>
+
+                        {% elif user.is_staff %}
+                            <td>
+                                Doctor
+                            </td>
+                        {% else %}
+                            <td>Nurse</td>
+                        {% endif %}
+                        <td>
+                            <center><a class="btn btn-sm btn-warning edit" name="{{ user.id }}">Edit</a>
+                                <a class="btn btn-sm btn-success delete" name="{{ user.id }}">Delete</a>
+                            </center>
+
+                        </td>
+
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+
+
+
+        <!-- /.box-body -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add User</h4>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="col-md-3">
+
+                        </div>
+
+                        <div class="col-md-6" style="background-color: #fff">
+
+                            <form method="post" novalidate>
+                                {% csrf_token %}
+                                {% include 'includes/bs4_form.html' with form=form %}
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                        <div class="col-md-3">
+
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+{% endblock %}

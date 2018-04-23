@@ -1,6 +1,6 @@
 {% extends 'base2.html' %}
 
-<title>{% block title %}Smart Heart Diagnosis{% endblock %}</title>
+<title>{% block title %}Smart Heart:: Patient List{% endblock %}</title>
 
 {% block content %}
 
@@ -14,7 +14,7 @@
 
     <!-- left column -->
 
-<div class="row">
+
 
     <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Add
         New Patient
@@ -99,6 +99,15 @@
 
                                 </select>
                             </div>
+                             <div class="form-group" data-provide="datepicker">
+                                            <label>Date of Birth</label>
+                                            <div class="input-group date" data-provide="datepicker">
+                                                <input type="date" class="form-control" name="birth_date">
+                                                <div class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-th"></span>
+                                                </div>
+                                            </div>
+                                        </div>
                             <div class="form-group">
                                 <label>Contact</label>
                                 <input type="text" class="form-control" placeholder="Enter contact number "
@@ -132,7 +141,7 @@
     </div>
 
 
-</div>
+
 
 
 

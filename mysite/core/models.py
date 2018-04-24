@@ -25,7 +25,7 @@ class Patient(models.Model):
     firstname=models.CharField(max_length=500, blank=True)
     lastname=models.CharField(max_length=500, blank=True)
     birth_date=models.DateField(null=True,blank=True)
-    gender=models.CharField(max_length=1,blank=True)
+    gender=models.IntegerField()
     address=models.CharField(max_length=500, blank=True)
     contact=models.CharField(max_length=500,blank=True)
     date_created=models.DateField(auto_now=True)

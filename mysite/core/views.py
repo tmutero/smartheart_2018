@@ -1,7 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
+
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from datetime import datetime, date
+
+from django.template import loader
+
 from mysite.core.forms import SignUpForm
 from .models import *
 from xhtml2pdf import pisa
@@ -44,7 +49,7 @@ def create_patient(request):
 
 def read_patient(request):
     patients = Patient.objects.all()
-    print("=========================")
+
     print(patients)
     context = {'patients': patients}
     return render(request, 'patient/list.html', context)
@@ -89,7 +94,7 @@ def create_patient_clinical(request):
     ca = request.POST['ca'],
     thal = request.POST['thal'],
     patient_id=patient_id)
-    print("========================================================",patient_record)
+
     patient_record.save()
 
 
@@ -129,18 +134,56 @@ def process(request,  precord_id,id):
     print("--------------------------------Record Value------------------------------------------------------------",
           precord_id)
     print("-=========================================--Patient----------------------------------------", id)
-    data = pd.read_csv("uploads/final.csv")
+    data = pd.read_csv("mysite/uploads/heart.csv")
+    age=patient.age()
+    sex=patient.gender
+    chest_pain =patient_record1.chest_pain
+    trestbps =patient_record1.trestbps
+    chol =patient_record1.chol
+    fbs =patient_record1.fbs
+    restEcg =patient_record1.restEcg
+    thalach =patient_record1.thalach
+    exang =patient_record1.exang
+    oldPeak =patient_record1.oldPeak
+    slope =patient_record1.slope
+    ca =patient_record1.ca
+    thal =patient_record1.thal
+    print("-------------------------------------")
+    print("Age",age)
+    print("Sex",sex)
+    print("chest pain",chest_pain)
+    print("trestbps",trestbps)
+    print("Chol",chol)
+    print("Fbs",fbs)
+    print("Restecg",restEcg)
+    print("Thalach",thalach)
+    print("Exang",exang)
+    print("OldPeak",oldPeak)
+    print("Slope",slope)
+    print("CA",ca)
+    print("Thal",thal)
+    print("=====================================")
+
+
+
+
+
 
 
     data = data[[
-        "pregnant",
-        "glucose",
-        "pressure",
-        "skin",
-        "insulin",
-        "mass",
-        "pedegree",
         "age",
+        "sex",
+        "chest_pain",
+        "trestbps",
+        "chol",
+        "fbs",
+        "restecg",
+        "thalach",
+        "exang",
+        "oldpeak",
+        "slope",
+        "ca",
+        "thal",
         "class"
 
     ]].dropna(axis=0, how='any')
@@ -149,20 +192,36 @@ def process(request,  precord_id,id):
     X_train, X_test = train_test_split(data, test_size=0.5, random_state=int(time.time()))
     gnb = GaussianNB()
     used_features = [
-        "pregnant",
-        "glucose",
-        "pressure",
-        "skin",
-        "insulin",
-        "mass",
-        "pedegree",
+
         "age",
+        "sex",
+        "chest_pain",
+        "trestbps",
+        "chol",
+        "fbs",
+        "restecg",
+        "thalach",
+        "exang",
+        "oldpeak",
+        "slope",
+        "ca",
+        "thal"
 
     ]
     gnb.fit(
         X_train[used_features].values,
         X_train["class"]
     )
+    print(data.head())
+    print("Dataset Lenght:: ", len(data))
+    print("Dataset Shape:: ", data.shape)
+
+    predict=gnb.predict([[age,sex,chest_pain,trestbps,chol,fbs,restEcg,thalach,exang,oldPeak,slope,ca,thal]])
+    print("Predict Value",predict)
+
+    drugs = Drug.objects.all()
+    context = {'predict': predict, 'patient': patient, 'drugs':drugs,}
+    template = loader.get_template('diagnosis.html')
 
 
-    return
+    return HttpResponse(template.render(context, request))

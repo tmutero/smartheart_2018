@@ -40,7 +40,12 @@
                 <td>{{ patient.firstname }}</td>
                 <td>{{ patient.lastname }}</td>
                 <td>{{ patient.age }}</td>
-                <td>{{ patient.gender }}</td>
+                {% if patient.gender == 1 %}
+                    <td>M</td>
+                    {% else %}
+                    <td>F</td>
+                {% endif %}
+
                 <td>{{ patient.contact }}</td>
                 <td>{{ patient.address }}</td>
 
@@ -94,8 +99,8 @@
                             <div class="form-group">
                                 <label>Gender</label>
                                 <select class="form-control" name="gender">
-                                    <option value="M">Male</option>
-                                    <option value="F">Female</option>
+                                    <option value="1">Male</option>
+                                    <option value="0">Female</option>
 
                                 </select>
                             </div>

@@ -1,0 +1,98 @@
+{% extends 'base2.html' %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="#"><span>Results</span></a></li>
+        <li><a href="#"><span>Heart</span></a></li>
+        <li class="active"><span>Disease</span></li>
+    </ol>
+
+    <div class="">
+        <a href="{% url 'view_patient_record' patient.id %}"><h3>Patient Name-  {{ patient.firstname }} {{ patient.lastname }}</h3></a>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">Results</div>
+        <div class="panel-body">
+            {% if predict == 0 %}
+                <div class="col-md-6">
+                <div class="panel panel-info">
+                        <div class="panel-heading"><h4>Diagnosis Results</h4></div>
+                        <div class="panel-body">
+                            <h4 class="alert alert-info">Healthy No Signs of Heart</h4>
+                            {% load static %}
+                            <center><img src="{% static 'assets/img/unnamed.png' %}" class="img-thumbnail" alt="Heart"></center>
+                            <a href="#"><h5>Produce Report</h5></a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-6"></div>
+
+
+
+            {% else %}
+
+               <div class="col-md-6">
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><h4>Diagnosis Results</h4></div>
+                        <div class="panel-body">
+                            <h4 class="alert alert-danger">Heart Test is Positive</h4>
+                            {% load static %}
+                            <center><img src="{% static 'assets/img/unnamed.png' %}" class="img-thumbnail" alt="Heart"></center>
+                            <a href="#"><h5>Produce Report</h5></a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                 <div class="panel panel-info">
+                        <div class="panel-heading"><h4>Drug Recommendation</h4></div>
+                        <div class="panel-body">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Add Drug Recommendations
+                    </button>
+                    <h5></h5>
+                    <center><img src="{% static 'assets/img/pills 2.jpg' %}" class="img-thumbnail" alt="Heart"></center>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="exampleModalLabel">Drug List</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   </div>
+                    </div>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

@@ -8,291 +8,346 @@
         <h3>Patient -{{ patient.firstname }} {{ patient.lastname }}</h3>
     </div>
     <div class="panel with-nav-tabs panel-info">
-    <div class="panel-heading">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#dashbord" data-toggle="tab">Patient Dashbord</a></li>
-            <li><a href="#clinical" data-toggle="tab">Clinical Records</a></li>
+        <div class="panel-heading">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#dashbord" data-toggle="tab">Patient Dashbord</a></li>
+                <li><a href="#clinical" data-toggle="tab">Clinical Records</a></li>
 
-            <li><a href="#diagnosis" data-toggle="tab">Diagnosis Records</a></li>
-            <li><a href="#report" data-toggle="tab">Patient Report</a></li>
+                <li><a href="#diagnosis" data-toggle="tab">Diagnosis Records</a></li>
 
-        </ul>
-    </div>
-    <div class="panel-body">
-    <div class="tab-content">
-        <div class="tab-pane fade in active" id="dashbord">Patient Details
-            <table class="table table-bordered">
-                <tbody>
-                <tr>
-                    <th>Firstname</th>
-                    <td>{{ patient.firstname }}</td>
-                </tr>
-                <tr>
-                    <th>Surname</th>
-                    <td>{{ patient.lastname }}</td>
-                </tr>
-                <tr>
-                    <th>Gender</th>
-                    <td>{{ patient.gender }}</td>
-                </tr>
-                <tr>
-                    <th>Age</th>
-                    <td>{{ patient.age }}</td>
-                </tr>
-                <tr>
-                    <th>Mobile Number</th>
-                    <td>{{ patient.contact }}</td>
-                </tr>
-                <tr>
-                    <th>Address</th>
-                    <td>{{ patient.address }}</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><a class="btn btn-sm btn-warning" href="#"><span
-                            class="glyphicon glyphicon-edit"></span> Print</a>
-                        <a class="btn btn-sm btn-success" href="delete/{{ patient.id }}"><span
-                                class="glyphicon glyphicon-pencil"></span> Update</a></td>
 
-                </tr>
-
-                </tbody>
-            </table>
-
+            </ul>
         </div>
-        <div class="tab-pane fade" id="clinical">
-            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Add
-                New Clinical Details
-            </button>
-            <table class="table table-responsive">
-                <thead class="alert-default">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="dashbord">Patient Details
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th>Firstname</th>
+                            <td>{{ patient.firstname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Surname</th>
+                            <td>{{ patient.lastname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Gender</th>
+                            {% if patient.gender == 1 %}
+                                <td>M</td>
+                            {% else %}
+                                <td>F</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>Age</th>
+                            <td>{{ patient.age }}</td>
+                        </tr>
+                        <tr>
+                            <th>Mobile Number</th>
+                            <td>{{ patient.contact }}</td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td>{{ patient.address }}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><a class="btn btn-sm btn-warning" href="#"><span
+                                    class="glyphicon glyphicon-edit"></span> Print</a>
+                                <a class="btn btn-sm btn-success" href="delete/{{ patient.id }}"><span
+                                        class="glyphicon glyphicon-pencil"></span> Update</a></td>
 
-                <tr>
-                    <th>Chest Pain</th>
-                    <th>Resting Blood Pressure(mmHg)</th>
-                    <th>Serum Cholestrol(mg/dl)</th>
-                    <th>Fasting Sugar Pressure</th>
-                    <th>Resting electro Result</th>
-                    <th>Defect Type</th>
-                    <th>Maximum Heart Rate</th>
+                        </tr>
 
-                    <th>Vessels Colored by fluroscopy</th>
-                    <th>Exerices Include Angina</th>
-                    <th>ST-depression by relative rest</th>
-                    <th>Slope of Peak Exercise</th>
+                        </tbody>
+                    </table>
 
+                </div>
+                <div class="tab-pane fade" id="clinical">
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Add
+                        New Clinical Details
+                    </button>
+                    <table class="table table-responsive">
+                        <thead class="alert-default">
 
-                </tr>
-                </thead>
-                <tbody>
+                        <tr>
+                            <th>Chest Pain</th>
+                            <th>Resting Blood Pressure(mmHg)</th>
+                            <th>Serum Cholestrol(mg/dl)</th>
+                            <th>Fasting Sugar Pressure</th>
+                            <th>Resting electro Result</th>
+                            <th>Defect Type</th>
+                            <th>Maximum Heart Rate</th>
 
-
-                {% for patient_record in patient_record %}
-                    <tr>
-                        <td>{{ patient_record.chest_pain }}</td>
-                        <td>{{ patient_record.trestbps }}</td>
-                        <td>{{ patient_record.chol }}</td>
-                        <td>{{ patient_record.fbs }}</td>
-                        <td>{{ patient_record.restEcg }}</td>
-                        <td>{{ patient_record.thalach }}</td>
-                        <td>{{ patient_record.exang }}</td>
-                        <td>{{ patient_record.oldPeak }}</td>
-                        <td>{{ patient_record.slope }}</td>
-                        <td>{{ patient_record.ca }}</td>
-                        <td>{{ patient_record.thal }}</td>
+                            <th>Vessels Colored by fluroscopy</th>
+                            <th>Exerices Include Angina</th>
+                            <th>ST-depression by relative rest</th>
+                            <th>Slope of Peak Exercise</th>
 
 
-                        <td>
-                            <center>
-                                <a class="btn btn-sm btn-info update"
-                                   href="{% url 'process'  patient_record.id patient.id%}">Diagnosis</a>
-                            </center>
-                        </td>
-
-                    </tr>
-                {% endfor %}
-
-                </tbody>
-            </table>
-
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="largeModalLabel">Patient Clinical Details</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
+                        </tr>
+                        </thead>
+                        <tbody>
 
 
-                            <div class="row">
-                                <div class="panel panel-default " style="margin-top: auto;
+                        {% for patient_record in patient_record %}
+                            <tr>
+                                {% if patient_record.chest_pain == 1 %}
+                                    <td>Typical Angina</td>
+                                {% elif patient_record.chest_pain == 2 %}
+                                    <td>Atypical</td>
+                                {% elif patient_record.chest_pain == 3 %}
+                                    <td>Non-anginal pain</td>
+                                {% else %}
+                                    <td>Asymptomatic</td>
+                                {% endif %}
+                                <td>{{ patient_record.trestbps }}</td>
+                                <td>{{ patient_record.chol }}</td>
+                                {% if patient_record.fbs == 1 %}
+                                    <td> True</td>
+                                {% else %}
+                                    <td>False</td>
+                                {% endif %}
+                                {% if patient_record.restEcg == 0 %}
+                                    <td>Normal</td>
+                                {% elif patient_record.restEcg == 1 %}
+                                    <td>ST-T Wave</td>
+                                {% else %}
+                                    <td> Ventricular Hypertrophy</td>
+                                {% endif %}
+
+                                <td>{{ patient_record.thalach }}</td>
+                                <td>{{ patient_record.exang }}</td>
+                                <td>{{ patient_record.oldPeak }}</td>
+                                {% if  patient_record.slope == 1 %}
+                                    <td>Upsloping</td>
+                                {% elif patient_record.slope == 2 %}
+                                    <td>Flat</td>
+                                {% else %}
+                                    <td>Downsloping</td>
+                                {% endif %}
+
+
+                                <td>{{ patient_record.ca }}</td>
+                                {% if patient_record.thal == 3 %}
+                                    <td>Normal</td>
+                                {% elif patient_record.thal == 6 %}
+                                    <td>Fixed</td>
+                                {% else %}
+                                    <td>Reversible Defect</td>
+                                {% endif %}
+
+
+
+                                <td>
+                                    <center>
+                                        <a class="btn btn-sm btn-info update"
+                                           href="{% url 'process' patient_record.id patient.id %}">Diagnosis</a>
+                                    </center>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="largeModalLabel">Patient Clinical Details</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+
+                                    <div class="row">
+                                        <div class="panel panel-default " style="margin-top: auto;
     box-shadow: 0 0 20px grey;
     padding:0 10px 0 10px;">
-                                    <div class="panel-heading"><font size="5">Diagnosis</font></div>
-                                    <div class="panel-body">
-                                        <div id="data">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading"><font size="2">Units Information</font>
+                                            <div class="panel-heading"><font size="5">Diagnosis</font></div>
+                                            <div class="panel-body">
+                                                <div id="data">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading"><font size="2">Units
+                                                            Information</font>
+                                                        </div>
+                                                        <div class="panel-body">
+
+                                                            <form action="create_patient_clinical" method="POST"
+                                                                  enctype="multipart/form-data">
+
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="patient_id"
+                                                                       value="{{ patient.id }}">
+                                                                <div class="row">
+
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label>Chest Pain Type</label>
+                                                                            <select class="form-control"
+                                                                                    name="chest_pain">
+                                                                                <option value="1">Typical Angina
+                                                                                </option>
+                                                                                <option value="2">Atypical Angina
+                                                                                </option>
+                                                                                <option value="3">Non-angina pain
+                                                                                </option>
+                                                                                <option value="4">Asymptomatic</option>
+
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label>Resting Blood Pressure (mmHg)</label>
+                                                                            <input type="number" class="form-control"
+                                                                                   name="trestbps">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label>Serum Cholestrol (mg/dl)</label>
+                                                                            <input type="number" class="form-control"
+                                                                                   name="chol"
+                                                                                   required>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label>Defect Type</label>
+                                                                            <select class="form-control" name="thal">
+                                                                                <option value="3">Normal</option>
+                                                                                <option value="6">Fixed</option>
+                                                                                <option value="7">Reversible Defect
+                                                                                </option>
+
+
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label>Fasting Sugar Pressure</label>
+
+                                                                            <select class="form-control" name="fbs">
+                                                                                <option value="1">True</option>
+                                                                                <option value="0">False</option>
+
+
+                                                                            </select>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label>Resting electrocadiographic
+                                                                            Result</label><br>
+                                                                        <select class="form-control" name="restEcg">
+                                                                            <option value="0">Normal</option>
+                                                                            <option value="1">Having ST-T Wave</option>
+                                                                            <option value="2">Definite Ventricular
+                                                                                Hypertrophy
+                                                                            </option>
+
+
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label>Maximum Heart Rate</label>
+                                                                        <input type="number" class="form-control"
+                                                                               name="thalach"
+                                                                               required>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label>Vessels Colored
+                                                                            by fluroscopy</label>
+                                                                        <select class="form-control" name="ca">
+                                                                            <option value="0">0</option>
+                                                                            <option value="1">1</option>
+                                                                            <option value="2">2</option>
+                                                                            <option value="3">3</option>
+
+
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <label>Exerices Include Angina</label>
+                                                                        <select class="form-control" name="exang">
+                                                                            <option value="1">True</option>
+                                                                            <option value="0">False</option>
+
+
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label>ST-depression by relative rest</label>
+                                                                        <input type="number" class="form-control"
+                                                                               name="oldPeak" required>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label>Slope of Peak Exercise</label>
+
+                                                                        <select class="form-control" name="slope">
+                                                                            <option value="1">Upsloping</option>
+                                                                            <option value="2">Flat</option>
+                                                                            <option value="3">Downsloping</option>
+
+
+                                                                        </select>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row" style="padding-top: 10px">
+
+                                                                    <div class="col-md-6"></div>
+                                                                    <div class="col-md-4">
+
+                                                                    </div>
+                                                                </div>
+                                                                <button type="submit"
+                                                                        class="btn btn-primary " id="">
+                                                                    Submit &nbsp;&nbsp;<i
+                                                                        class="fa fa-angle-double-right"></i>
+                                                                </button>
+                                                            </form>
+
+
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="panel-body">
 
-                                                    <form action="create_patient_clinical" method="POST"
-                                                          enctype="multipart/form-data">
-
-                                                        {% csrf_token %}
-                                                        <input type="hidden" name="patient_id"
-                                                               value="{{ patient.id }}">
-                                                        <div class="row">
-
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label>Chest Pain Type</label>
-                                                                    <select class="form-control" name="chest_pain">
-                                                                        <option value="1">Typical Agina</option>
-                                                                        <option value="2">Typical Agina</option>
-                                                                        <option value="3">Non-agina pain</option>
-                                                                        <option value="4">Asymptomatic</option>
-
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label>Resting Blood Pressure (mmHg)</label>
-                                                                    <input type="number" class="form-control"
-                                                                           name="trestbps">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label>Serum Cholestrol (mg/dl)</label>
-                                                                    <input type="number" class="form-control"
-                                                                           name="chol"
-                                                                           required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label>Defect Type</label>
-                                                                    <select class="form-control" name="thal">
-                                                                        <option value="3">Normal</option>
-                                                                        <option value="6">Fixed</option>
-                                                                        <option value="7">Reversible Defect</option>
-
-
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label>Fasting Sugar Pressure</label>
-                                                                    <input type="number" class="form-control"
-                                                                           name="fbs" required>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label>Resting electrocadiographic Result</label><br>
-                                                                <select class="form-control" name="restEcg">
-                                                                    <option value="0">Normal</option>
-                                                                    <option value="1">Having ST-T Wave</option>
-                                                                    <option value="2">Definite Ventricular Hypertrophy
-                                                                    </option>
-
-
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label>Maximum Heart Rate</label>
-                                                                <input type="number" class="form-control" name="thalach"
-                                                                       required>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label>Vessels Colored
-                                                                    by fluroscopy</label>
-                                                                <select class="form-control" name="ca">
-                                                                    <option value="0">0</option>
-                                                                    <option value="1">1</option>
-                                                                    <option value="2">2</option>
-                                                                    <option value="3">3</option>
-
-
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <label>Exerices Include Angina</label>
-                                                                <select class="form-control" name="exang">
-                                                                    <option value="1">True</option>
-                                                                    <option value="0">False</option>
-
-
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label>ST-depression by relative rest</label>
-                                                                <input type="number" class="form-control"
-                                                                       name="oldPeak" required>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label>Slope of Peak Exercise</label>
-                                                                <input type="number" class="form-control" name="slope"
-                                                                       required>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="row" style="padding-top: 10px">
-
-                                                            <div class="col-md-6"></div>
-                                                            <div class="col-md-4">
-
-                                                            </div>
-                                                        </div>
-                                                        <button type="submit"
-                                                                class="btn btn-primary " id="">
-                                                            Submit &nbsp;&nbsp;<i
-                                                                class="fa fa-angle-double-right"></i>
-                                                        </button>
-                                                    </form>
-
-
-                                                </div>
                                             </div>
                                         </div>
-
                                     </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-
-                        </div>
                     </div>
+
+
                 </div>
+                <div class="tab-pane fade" id="diagnosis">
+
+                </div>
+
             </div>
 
 
         </div>
-        <div class="tab-pane fade" id="diagnosis">
-
-        </div>
-     <div class="tab-pane fade" id="report">
-           lllll
-        </div>
-    </div>
-
-
-
-</div>
     </div>
 {% endblock %}

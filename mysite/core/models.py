@@ -51,9 +51,10 @@ class PatientRecords(models.Model):
 
 class Prescribe(models.Model):
     patient=models.ForeignKey('Patient', on_delete=models.CASCADE)
-    drug = models.ForeignKey('Drug', on_delete=models.CASCADE)
+    drug = models.ForeignKey('Drug', on_delete=models.CASCADE, blank=True,null=True)
     date_created=models.DateField(auto_now=True)
-
+    status=models.BooleanField(default=True)
+    disease = models.ForeignKey('Disease', on_delete=models.CASCADE, blank=True,null=True)
 
 
 class Drug(models.Model):
@@ -64,3 +65,13 @@ class Drug(models.Model):
 
 
 
+class Disease(models.Model):
+    name = models.CharField(max_length=50)
+
+    date_created=models.DateField(auto_now_add=True, blank=True, null=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self):
+        return self.name

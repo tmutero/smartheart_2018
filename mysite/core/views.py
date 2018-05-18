@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
+from django.db.models import Q
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -14,6 +15,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 import time
 import pandas as pd
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
 @login_required
 def home(request):
     return render(request, 'home.html')
@@ -219,9 +222,54 @@ def process(request,  precord_id,id):
     predict=gnb.predict([[age,sex,chest_pain,trestbps,chol,fbs,restEcg,thalach,exang,oldPeak,slope,ca,thal]])
     print("Predict Value",predict)
 
+    if predict != 0:
+        disease = Disease.objects.get(id=predict)
+        prescribe = Prescribe(patient_id=id, disease_id=disease.id
+                              )
+        prescribe.save()
+
+    else:
+        disease = "Health"
     drugs = Drug.objects.all()
-    context = {'predict': predict, 'patient': patient, 'drugs':drugs,}
+
+
+
+    context = {'predict': predict, 'patient': patient, 'drugs':drugs,'disease':disease,}
     template = loader.get_template('diagnosis.html')
 
 
     return HttpResponse(template.render(context, request))
+
+
+def prescribeDrug(request):
+
+    if not request.user.is_authenticated:
+        return redirect('home')
+
+
+    patient_id = request.POST.get('patient_id')
+
+    print(patient_id)
+    drug=request.POST['drug']
+    print("Drug ----------------------------------",drug)
+    Prescribe.objects.filter(Q(patient_id=patient_id)).update(drug_id=drug)
+
+
+    return redirect('view_patient_record', patient_id)
+
+
+def create_disease(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    disease = Disease(name=request.POST['name'])
+
+    disease.save()
+    return redirect('read_disease')
+
+
+def read_disease(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    diseases = Disease.objects.all()
+    context = {'diseases': diseases}
+    return render(request, 'disease/list.html', context)

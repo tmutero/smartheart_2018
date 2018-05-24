@@ -40,7 +40,8 @@ def signup(request):
 
 
 def create_patient(request):
-
+    if not request.user.is_authenticated:
+        return redirect('home')
 
     patient = Patient(firstname=request.POST['firstname'], lastname=request.POST['lastname'],
                        contact=request.POST['contact'],address=request.POST['address'],
@@ -51,6 +52,8 @@ def create_patient(request):
 
 
 def read_patient(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     patients = Patient.objects.all()
 
     print(patients)
@@ -59,12 +62,16 @@ def read_patient(request):
 
 
 def edit_patient(request, id):
+    if not request.user.is_authenticated:
+        return redirect('home')
     patient = Patient.objects.get(id=id)
     context = {'patient': patient}
     return render(request, 'patient/edit.html', context)
 
 
 def update_patient(request, id):
+    if not request.user.is_authenticated:
+        return redirect('home')
     patient = Patient.objects.get(id=id)
     patient.firstname = request.POST['firstname']
     patient.lastname = request.POST['lastname']
@@ -72,6 +79,8 @@ def update_patient(request, id):
     return redirect('/read_patient/')
 
 def view_patient_record(request, id):
+    if not request.user.is_authenticated:
+        return redirect('home')
     print("-------------------------",id)
     patient=Patient.objects.get(id=id)
     patient_record=PatientRecords.objects.filter(patient_id=id)
@@ -83,6 +92,8 @@ def view_patient_record(request, id):
     return render(request,'patient/view.html',contex)
 
 def create_patient_clinical(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     patient_id=request.POST.get('patient_id')
     print("==========================",patient_id)
 
@@ -104,6 +115,8 @@ def create_patient_clinical(request):
     return redirect('view_patient_record',patient_id)
 
 def read_user(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     users = User.objects.all()
 
     print(users)
@@ -111,7 +124,8 @@ def read_user(request):
     return render(request, 'user/list.html', context)
 
 def create_drug(request):
-
+    if not request.user.is_authenticated:
+        return redirect('home')
 
     drug = Drug(name=request.POST['name'], type=request.POST['type'],
                 formulation=request.POST['formulation'])
@@ -119,6 +133,8 @@ def create_drug(request):
     return redirect('read_drug')
 
 def read_drug(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     drugs = Drug.objects.all()
 
     print(drugs)
@@ -130,6 +146,8 @@ def read_drug(request):
 #process
 
 def process(request,  precord_id,id):
+    if not request.user.is_authenticated:
+        return redirect('home')
 
     patient = Patient.objects.get(id=id)
     patient_record1 = PatientRecords.objects.get(id=precord_id)
@@ -221,6 +239,7 @@ def process(request,  precord_id,id):
 
     predict=gnb.predict([[age,sex,chest_pain,trestbps,chol,fbs,restEcg,thalach,exang,oldPeak,slope,ca,thal]])
     print("Predict Value",predict)
+
 
     if predict != 0:
         disease = Disease.objects.get(id=predict)

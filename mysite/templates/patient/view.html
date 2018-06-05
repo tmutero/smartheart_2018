@@ -138,7 +138,7 @@
                                     <td>Reversible Defect</td>
                                 {% endif %}
 
-
+                                 {% if user.is_superuser %}
 
                                 <td>
                                     <center>
@@ -146,6 +146,7 @@
                                            href="{% url 'process' patient_record.id patient.id %}">Diagnosis</a>
                                     </center>
                                 </td>
+                            {% endif %}
 
                             </tr>
                         {% endfor %}

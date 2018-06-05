@@ -11,10 +11,11 @@
         <li class="active"><span>List </span></li>
     </ol>
 
-
+{% if user.is_superuser %}
     <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Add
         Drug
     </button>
+    {% endif %}
     <table class="table table-responsive" id="table">
         <thead class="alert-info">
 
@@ -22,7 +23,9 @@
             <th>Drug Name</th>
             <th>Type</th>
             <th>Formulation</th>
+            {% if user.is_superuser %}
             <th>Action</th>
+            {% endif %}
 
         </tr>
         </thead>
@@ -32,11 +35,14 @@
                 <td>{{ drug.name }}</td>
                 <td>{{ drug.type }}</td>
                 <td>{{ drug.formulation }}</td>
+                {% if user.is_superuser %}
                 <td>
+
                     <center><a class="btn btn-sm btn-warning edit" name="{{ drug.id }}">Edit</a>
                         <a class="btn btn-sm btn-primary delete" name="{{ drug.id }}">Delete</a>
                     </center>
                 </td>
+            {% endif %}
 
             </tr>
         {% endfor %}

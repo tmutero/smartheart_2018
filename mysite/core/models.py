@@ -68,6 +68,7 @@ class Drug(models.Model):
 class Disease(models.Model):
     name = models.CharField(max_length=50)
 
+    description = models.CharField(max_length=100, blank=True, null=True)
     date_created=models.DateField(auto_now_add=True, blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)

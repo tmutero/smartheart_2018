@@ -63,7 +63,7 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="{% url 'home' %}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>S</b>HD</span>
             <!-- logo for regular state and mobile devices -->
@@ -126,10 +126,6 @@ desired effect
                     <li>
                         <a href="{% url 'read_patient' %}">
                             <i class="fa fa-fw fa-heartbeat"></i> <span>Patients</span>
-                            <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">12</small>
-
-            </span>
                         </a>
                     </li>
 
@@ -146,19 +142,19 @@ desired effect
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{% url 'report' %}">
                             <i class="fa fa-fw  fa-bar-chart"></i> <span>Reports</span>
 
-
-                            </span>
                         </a>
                     </li>
+                      {% if user.is_superuser %}
                     <li>
                         <a href="{% url 'read_user' %}">
                             <i class="fa fa-fw fa-user"></i> <span>Users</span>
 
                         </a>
                     </li>
+                          {% endif %}
 
                     <li>
                         <a href="{% url 'logout' %}">

@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base2.html' %}
 
-</body>
-</html>
+<title>{% block title %}Smart Heart System:: Report List{% endblock %}</title>
+
+{% block content %}
+
+
+    <ol class="breadcrumb">
+        <li><a href="#"><span>Report</span></a></li>
+        <li><a href="#"><span>Details</span></a></li>
+        <li class="active"><span>List </span></li>
+    </ol>
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-6">
+                <section class="card">
+                    <div class="card-body text-secondary"><h4>Most Heart Disease Distribution</h4></div>
+                    <div id="chart"></div>
+                </section>
+            </div>
+            <div class="col-lg-6 ">
+                <section class="card">
+                    <div class="card-body text-secondary"><h4>PDF Reports</h4></div>
+                    <li role="presentation"><a href="#">Patients Diagnosed</a></li>
+
+                    <li role="presentation"><a href="#">Most Prescribed Drug</a></li>
+                    <li role="presentation"><a href="#">All Patients</a></li>
+
+
+
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script>
+        Highcharts.chart('chart', {{ chart|safe }});
+    </script>
+{% endblock %}

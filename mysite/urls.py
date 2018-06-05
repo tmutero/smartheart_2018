@@ -29,9 +29,10 @@ urlpatterns = [
 #drug
     url(r'^read_drug$', core_views.read_drug, name='read_drug'),
     url(r'^create_drug$', core_views.create_drug, name='create_drug'),
-    url(r'^prescribeDrug$', core_views.prescribeDrug, name='prescribeDrug'),
+    url(r'^prescribe_drug$', core_views.prescribe_drug, name='prescribe_drug'),
 
     url(r'^create_disease$', core_views.create_disease, name='create_disease'),
     url(r'^read_disease$', core_views.read_disease, name='read_disease'),
-
+    url(r'^report$', core_views.report, name='report'),
+    url(r'^more_prescribed_drug$', core_views.more_prescribed_drug, name='more_prescribed_drug$'),
 ]

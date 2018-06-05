@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from django.db.models import Q
-
+from django.db.models import Q, Count
+import time
+import datetime
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from datetime import datetime, date
-
+import json
 from django.template import loader
 
 from mysite.core.forms import SignUpForm
@@ -17,6 +18,9 @@ import time
 import pandas as pd
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
+from twilio.rest import Client
+from .credentials import ACCOUNT_SID,MY_CELL,MY_TWILO,AUTH_TOKEN
+
 @login_required
 def home(request):
     return render(request, 'home.html')
@@ -210,10 +214,9 @@ def process(request,  precord_id,id):
     ]].dropna(axis=0, how='any')
 
 
-    X_train, X_test = train_test_split(data, test_size=0.5, random_state=int(time.time()))
+    X_train, X_test = train_test_split(data, test_size=0.56, random_state=int(time.time()))
     gnb = GaussianNB()
     used_features = [
-
         "age",
         "sex",
         "chest_pain",
@@ -247,6 +250,21 @@ def process(request,  precord_id,id):
                               )
         prescribe.save()
 
+        user = User.objects.get(id=request.user.id)
+
+        doctor = user.get_full_name()
+
+        client = Client(ACCOUNT_SID, AUTH_TOKEN)
+
+        # message = client.messages.create(
+        #
+        #     body="Dear Patient-" + patient.firstname + " " + patient.lastname +"\n"+ "you have been diagnosed with -\n"+ disease.name+", Heart. "
+        #                                                                         "Doctor name :: " + "" + doctor + "" + "" +
+        #          ":" + " ",
+        #     to="+263774226217",
+        #     from_="+18064513470", )
+        # print(message.body)
+
     else:
         disease = "Health"
     drugs = Drug.objects.all()
@@ -260,27 +278,28 @@ def process(request,  precord_id,id):
     return HttpResponse(template.render(context, request))
 
 
-def prescribeDrug(request):
-
-    if not request.user.is_authenticated:
-        return redirect('home')
-
-
-    patient_id = request.POST.get('patient_id')
-
-    print(patient_id)
-    drug=request.POST['drug']
-    print("Drug ----------------------------------",drug)
-    Prescribe.objects.filter(Q(patient_id=patient_id)).update(drug_id=drug)
-
-
-    return redirect('view_patient_record', patient_id)
+# def prescribeDrug(request):
+#
+#     if not request.user.is_authenticated:
+#         return redirect('home')
+#
+#
+#     patient_id = request.POST.get('patient_id')
+#
+#     print(patient_id)
+#     drug=request.POST['drug']
+#     print("Drug ----------------------------------",drug)
+#     Prescribe.objects.filter(Q(patient_id=patient_id)).update(drug_id=drug)
+#
+#
+#     return redirect('view_patient_record', patient_id)
 
 
 def create_disease(request):
     if not request.user.is_authenticated:
         return redirect('home')
-    disease = Disease(name=request.POST['name'])
+
+    disease = Disease(name=request.POST['name'],description=request.POST['description'])
 
     disease.save()
     return redirect('read_disease')
@@ -292,3 +311,86 @@ def read_disease(request):
     diseases = Disease.objects.all()
     context = {'diseases': diseases}
     return render(request, 'disease/list.html', context)
+
+def report(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+
+    dataset = Prescribe.objects \
+        .values('disease_id') \
+        .annotate(d1=Count('disease_id', filter=Q(disease_id=1)),
+                  d3=Count('disease_id', filter=Q(disease_id=3)),
+                  d4=Count('disease_id', filter=Q(disease_id=4)),
+                  d2=Count('disease_id', filter=Q(disease_id=2))) \
+        .order_by('disease_id')
+
+    categories = list()
+    d1_series_data = list()
+    d2_series_data = list()
+    d3_series_data = list()
+    d4_series_data = list()
+
+    for entry in dataset:
+        categories.append('%s Disease' % entry['disease_id'])
+        d1_series_data.append(entry['d1'])
+        d2_series_data.append(entry['d2'])
+        d3_series_data.append(entry['d3'])
+        d4_series_data.append(entry['d4'])
+
+    d1_series = {
+        'name': 'Angina Disease',
+        'data': d1_series_data,
+        'color': 'red'
+    }
+
+    d2_series = {
+        'name': 'Coronary Artery Disease ',
+        'data': d2_series_data,
+        'color': 'green'
+    }
+    d3_series = {
+        'name': 'Myocardial Infarction(Heart Attach)',
+        'data': d3_series_data,
+        'color': 'blue'
+    }
+
+    d4_series = {
+        'name': 'Heart Failure',
+        'data': d4_series_data,
+        'color': 'black'
+    }
+
+    chart = {
+        'chart': {'type': 'bar'},
+        'title': {'text': 'Most Diagnosed Disease'},
+        'xAxis': {'categories': categories},
+        'series': [d1_series, d2_series,d3_series,d4_series]
+    }
+
+
+
+    dump = json.dumps(chart)
+
+    return render(request, 'report/list.html', {'chart': dump})
+
+def more_prescribed_drug(request):
+
+
+    return  0
+
+def prescribe_drug(request):
+
+    if not request.user.is_authenticated:
+        return redirect('home')
+
+
+    disease_id = request.POST.get('disease_id')
+    patient_id = request.POST.get('patient_id')
+    print(disease_id)
+    print(patient_id)
+    drug=request.POST['drug']
+    print("Drug ----------------------------------",drug)
+    Prescribe.objects.filter(Q(patient_id=patient_id) & Q(disease_id=disease_id)).update(drug_id=drug)
+
+
+    return redirect('view_patient_record', patient_id)

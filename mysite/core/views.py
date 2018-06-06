@@ -256,14 +256,14 @@ def process(request,  precord_id,id):
 
         client = Client(ACCOUNT_SID, AUTH_TOKEN)
 
-        # message = client.messages.create(
-        #
-        #     body="Dear Patient-" + patient.firstname + " " + patient.lastname +"\n"+ "you have been diagnosed with -\n"+ disease.name+", Heart. "
-        #                                                                         "Doctor name :: " + "" + doctor + "" + "" +
-        #          ":" + " ",
-        #     to="+263774226217",
-        #     from_="+18064513470", )
-        # print(message.body)
+        message = client.messages.create(
+
+            body="Dear Patient-" + patient.firstname + " " + patient.lastname +"\n"+ "you have been diagnosed with -\n"+ disease.name+", Heart. "
+                                                                                "Doctor name :: " + "" + doctor + "" + "" +
+                 ":" + " ",
+            to="+263774226217",
+            from_="+18064513470", )
+        print(message.body)
 
     else:
         disease = "Health"
